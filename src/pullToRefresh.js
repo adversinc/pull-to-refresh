@@ -6,6 +6,7 @@ export default function(opts) {
     scrollable: document.body,
     threshold: 150,
     checkAllParentsScroll: false,
+		ignoreClass: "",
     onStateChange() { /* noop */ }
   }, opts)
 
@@ -39,6 +40,12 @@ export default function(opts) {
         // Check if all parents are scrolled to top
         let cur = e.target;
         while(cur) {
+					if(opts.ignoreClass !== "") {
+						if(cur.classList && cur.classList.contains(opts.ignoreClass)) {
+							return;
+						}
+					}
+
           if(cur.scrollTop > 0) {
             return;
           }
