@@ -65,6 +65,7 @@
       scrollable: document.body,
       threshold: 150,
       checkAllParentsScroll: false,
+      ignoreClass: "",
       onStateChange: function onStateChange() {/* noop */}
     }, opts);
 
@@ -107,6 +108,12 @@
           // Check if all parents are scrolled to top
           var cur = e.target;
           while (cur) {
+            if (opts.ignoreClass !== "") {
+              if (cur.classList && cur.classList.contains(opts.ignoreClass)) {
+                return;
+              }
+            }
+
             if (cur.scrollTop > 0) {
               return;
             }
